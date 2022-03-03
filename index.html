@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bricks game</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+    <script>
+        var smileX=200;
+        var smileY=355;
+        var smileSpeed=2;
+        var smileDirectionX=-1;
+        var smileDirectionY=-1;
+        //var paddleX = mouseX+50;
+        //var paddleY = 380;
+
+        function setup(){
+            createCanvas(400, 400);
+        }
+
+        function draw(){
+            clear();
+            background('#86d7f7');
+            checkMargins();
+            paddle(mouseX, 380);
+            smile(smileX,smileY,25);
+            smileX=smileX+(smileSpeed*smileDirectionX);
+            smileY=smileY+(smileSpeed*smileDirectionY);
+            collide(smileX+15, smileY+15);
+        }
+
+        function checkMargins(){
+            if(smileX-15 < 0){
+                smileDirectionX = -1 * smileDirectionX;
+            }
+            if(smileY-15 < 0){
+                smileDirectionY=-1 * smileDirectionY;
+            }
+            if(smileX+15 > 400){
+                smileDirectionX = -1 * smileDirectionX;
+            }
+            
+        }
+
+        function smile(x, y, r){
+            fill('#403100');
+            ellipse(x, y, r, r);
+            fill('#42b9f5');
+            ellipse(x-r/4.5, y-r/4.5, r/3.75 ,r/3.75);
+            ellipse(x+r/4.5, y-r/4.5, r/3.75 ,r/3.75);
+            fill('#000000');
+            arc(x, y+r/3.75, r/3, r/3, 0, PI);
+           
+        }
+
+        function paddle(x,y){
+            fill('#00FF00');
+            rect(x-50, y, 100, 15);
+
+        }
+
+        function collide(x,y){
+            if(x < mouseX + 50 && x > mouseX - 50 && y==380){
+            smileDirectionY = -1 * smileDirectionY;
+            }
+        }
+    </script>
+</body>
+</html>
